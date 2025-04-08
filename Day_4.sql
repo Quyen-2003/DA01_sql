@@ -39,3 +39,18 @@ WHERE DATE(payment_date) IN ('2020-04-28','2020-04-29','2020-04-30')
 GROUP BY customer_id,DATE(payment_date)
 HAVING COUNT(payment_id) >1
 ORDER BY AVG(amount) DESC
+-- 4) MATHEMATIC OPERATORS & FUNCTIONS 
+-- Cộng: +, Trừ: -, Nhân: *, Chia: /, Số dư: %, luỹ thừa ^
+-- giá trị tuyệt đối: ABS(), làm tròn: ROUND(), số nguyên cận dưới:FLOOR(), số nguyên cận trên:CEILING()
+SELECT film_id,
+rental_rate,
+ROUND(rental_rate*1.1, 2) AS new_rental_rate,
+FLOOR(rental_rate*1.1, 2) AS new_rental_rate
+FROM film
+-- challenge: danh sáhc các bộ phim có giá thuê nhỏ hơn 4% chi phí thay thế
+SELECT film_id,
+rental_rate,
+replacement_cost,
+ROUND((rental_rate/replacement_cost)*100,2) AS percentage,
+FROM film
+where ROUND((rental_rate/replacement_cost)*100,2)<4
