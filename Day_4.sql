@@ -54,3 +54,13 @@ replacement_cost,
 ROUND((rental_rate/replacement_cost)*100,2) AS percentage,
 FROM film
 where ROUND((rental_rate/replacement_cost)*100,2)<4
+--5)Thứ tự thực hiện các câu lệnh
+SELECT customer_id
+COUNT (*) AS total_record
+FROM payment
+WHERE payment_date >='2020-01-30'
+GROUP BY customer_id
+HAVING COUNT(*) <=15
+ORDER BY toatl_record DESC
+LIMIT 5
+==> SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY => LIMIT
