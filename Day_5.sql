@@ -23,3 +23,11 @@ FROM pharmacy_sales
 where total_sales<cogs
 GROUP BY manufacturer
 ORDER BY SUM(cogs-total_sales) DESC;
+--Ex9: https://leetcode.com/problems/not-boring-movies/description/
+select*from Cinema where ID%2 <>0 AND description <> 'boring' ORDER BY rating DESC
+--Ex10: https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/
+select teacher_id, count(distinct subject_id) as cnt from Teacher group by teacher_id
+--Ex11: https://leetcode.com/problems/find-followers-count/description/
+select user_id ,count(follower_id) as followers_count from Followers group by user_id order by user_id 
+--Ex12: https://leetcode.com/problems/classes-more-than-5-students/description/
+select class from Courses group by class having count(student) >=5
