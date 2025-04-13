@@ -67,11 +67,44 @@ WHERE EXTRACT( 'year' FROM rental_date) =2020
 select extract(month from rental_date), count(*) from rental
 where extract(year from rental_date)=2020
 group by extract(month from rental_date)
-/*challenge 
--- 8) TO_CHAR () lấy thông tin datetime theo định dạng momg muốn(forrmat) 
+/* challenge - tháng nào có tổng số tiền thanh toán cao nhất?
+- ngày nào trong tuần có tổng số tiền thanh toán cao nhất? (0 là chủ nhật)
+- số tiền cao nhất mà một khách hàng đã chi tiêu trong một tuần là bao nhiêu?*/
+select extract(DOW/MONTH from payment_date) as day_of_week, 
+SUM(amount) as total_amount
+from payment 
+group by extract(DOW/MONTH from payment_date)
+order by sum(amount) desc
+  
+select customer_id, extract(week from payment_date),
+sum(amount) as total_amount
+from payment 
+group by customer_id, extract(week from payment_date)
+order by sum(amount) desc
+-- 8) TO_CHAR () lấy thông tin datetime theo định dạng momg muốn(format) 
 SELECT TO_CHAR(payment_date, 'year') 
 FROM payment
 -- 9) Intervals & Timestamp
 SELECT current_date,--ngày hiện tại
 current_timestamp, -- ngày giờ hiện tại
-returndate-rental_date AS rental_time -- là 1 interval
+return_date - rental_date AS rental_time -- là 1 interval
+
+select current_date, current_timestamp, 
+customer_id,
+rental_date,
+return_date,
+extract (day from return_date - rental_date)*24 + extract (hour from return_date - rental_date) || ' giờ'
+from rental
+  
+/* -ds tất cả thời gian đã thuê của khách hàng với customer_id 35.
+-Khách hàng nào có thời gian thuê trung bình dài nhất*/
+select customer_id, rental_date, return_date,
+return_date-rental_date as rental_time
+from rental
+where customer_id = 35
+
+select customer_id,
+AVG(return_date-rental_date) as avg_rental_time
+from rental
+group by customer_id
+order by customer_id desc
