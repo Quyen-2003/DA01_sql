@@ -45,7 +45,7 @@ ORDER BY AVG(amount) DESC
 SELECT film_id,
 rental_rate,
 ROUND(rental_rate*1.1, 2) AS new_rental_rate,
-FLOOR(rental_rate*1.1, 2) AS new_rental_rate
+FLOOR(rental_rate*1.1) AS new_rental_rate
 FROM film
 -- challenge: danh sáhc các bộ phim có giá thuê nhỏ hơn 4% chi phí thay thế
 SELECT film_id,
