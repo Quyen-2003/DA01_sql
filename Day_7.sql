@@ -27,3 +27,16 @@ limit 2
 -- Ex6: https://leetcode.com/problems/invalid-tweets/submissions/1606737259/?envType=study-plan-v2&amp;envId=top-sql-50
 select tweet_id from Tweets where length(content)>15
 -- Ex7: 
+-- Ex8: https://platform.stratascratch.com/coding/2151-number-of-hires-during-specific-time-period?code_type=1
+select count(id) as number_of_employees_hired
+from employees
+where extract(month from joining_date) between 1 and 7
+and extract(year from joining_date)=2022
+-- Ex9: https://platform.stratascratch.com/coding/9829-positions-of-letter-a?code_type=1
+select position ('a' in first_name)
+from worker
+where first_name='Amitah';
+-- Ex10: https://platform.stratascratch.com/coding/10039-macedonian-vintages?code_type=1
+select substring(title, length(winery)+2, 4) as the_vintage_years
+from winemag_p2
+where country = 'Macedonia'
