@@ -114,4 +114,54 @@ end) as low
 from payment
 GROUP BY customer_id
 order by customer_id
+/* Challenge: Thống kê có bao nhiêu bộ phim được đánh giá là R, PG, PG-13
+ở các thể loại phim long-medium-short
+-long: length > 120
+-medium: 60 <= length <=120
+-short: length<60 */
+select
+case 
+   when length > 120 then 'long'  
+   when length between 60 and 120 then 'medium'
+   else 'short'
+end as category,
+sum(case
+   when rating ='R' then 1 else 0
+end) as r,
+sum(case
+   when rating ='PG' then 1 else 0
+end) as pg,
+sum(case
+   when rating ='PG-13' then 1 else 0
+end) as pg_13
+from film
+group by category
+--3) COALESCE dùng để thay thế giá trị NULL ở 1 trường nào đó
+SELECT scheduled_arrival,
+actual_arrival,
+COALESCE(actual_arrival, '2020-01-01'),
+COALESCE(actual_arrival, scheduled_arrival),
+COALESCE(actual_arrival-scheduled_arrival, '00:00')
+FROM bookings.flights
+ --4) CAST
+-- string => number ( string phải chứa các chữ số, ko được chứa ký tự a,b,c..)
+ SELECT 
+CAST(ticket_no AS bigint) 
+FROM bookings.flights
+-- number=> string 
+SELECT 
+CAST(amount AS VARCHAR) 
+FROM bookings.flights
+-- datetime=> string 
+SELECT 
+CAST(scheduled_departure AS VARCHAR) 
+FROM bookings.flights
+ 
+select 
+scheduled_arrival, actual_arrival,
+coalesce (actual_arrival,'2020-01-01'),
+coalesce (actual_arrival,scheduled_arrival),
+coalesce(cast(actual_arrival-scheduled_arrival as varchar),'Not arrived')
+from flights
+
 
